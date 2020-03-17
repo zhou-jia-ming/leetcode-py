@@ -60,5 +60,64 @@ class TestGenerateTree(TestCase):
         self.assertEqual(root.left.left.val, target.left.left.val)
 
 
+# 层次遍历一棵树，返回一维数组
+def levelOrder(root: TreeNode):
+    res = []
+    if not root:
+        return res
+    my_stack = [root]
+    while my_stack:
+        new_stack = []
+        if set(my_stack) == set([None]):
+            break
+        for node in my_stack:
+            if node:
+                res.append(node.val)
+                if node.left:
+                    new_stack.append(node.left)
+                else:
+                    new_stack.append(None)
+                if node.right:
+                    new_stack.append(node.right)
+                else:
+                    new_stack.append(None)
+            else:
+                res.append(null)
+        my_stack = new_stack
+    while res[-1] is None:
+        res.pop()
+    return res
+
+
+class TestLevelOrder(TestCase):
+    def test_simple(self):
+        root = TreeNode(0)
+        root.left = TreeNode(1)
+        root.right = TreeNode(2)
+        target = levelOrder(root)
+        self.assertEqual(target, [0, 1, 2])
+
+    def test_none(self):
+        root = None
+        target = levelOrder(root)
+        self.assertEqual(target, [])
+
+    def test_with_null(self):
+        root = TreeNode(1)
+        root.right = TreeNode(2)
+        target = levelOrder(root)
+        self.assertEqual(target, [1, null, 2])
+
+    def test_complex(self):
+        root = TreeNode(1)
+        root.left = TreeNode(401)
+        root.left.left = TreeNode(349)
+        root.left.right = TreeNode(88)
+        root.left.left.left = TreeNode(90)
+
+        target = levelOrder(root)
+        self.assertEqual(target, [1, 401, null, 349, 88, 90])
+
+
 if __name__ == '__main__':
     main()
