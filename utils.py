@@ -5,6 +5,8 @@
 from typing import List, Any
 from unittest import TestCase, main
 
+null = None
+
 
 class TreeNode:
     def __init__(self, x):
@@ -51,7 +53,7 @@ class TestGenerateTree(TestCase):
         root = TreeNode(1)
         root.left = TreeNode(2)
         root.left.left = TreeNode(3)
-        target = generate_tree([1, 2, None, 3])
+        target = generate_tree([1, 2, null, 3])
         self.assertEqual(root.val, target.val)
         self.assertEqual(root.left.val, target.left.val)
         self.assertEqual(root.right, target.right)
