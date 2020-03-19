@@ -89,6 +89,36 @@ def levelOrder(root: TreeNode):
     return res
 
 
+# 使用Morris算法中序遍历一棵二叉树
+def morris_inorder(root: TreeNode) -> List[Any]:
+    res = []
+    while root:
+        if root.left:
+            predecessor = root.left
+            while predecessor.right and predecessor.right != root:
+                predecessor = predecessor.right
+            if predecessor.right is None:
+                # create link ,then go to left
+                predecessor.right = root
+                root = root.left
+            else:
+                # cut link, go right
+                predecessor.right = None
+                res.append(root.val)
+                root = root.right
+        else:
+            # no left , go right
+            res.append(root.val)
+            root = root.right
+    return res
+
+class TestMorrisInOrder(TestCase):
+    def test_simple(self):
+        root = generate_tree([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+
+        self.assertEqual(morris_inorder(root), [8, 4, 9, 2, 10, 5, 1, 6, 3, 7])
+
+
 class TestLevelOrder(TestCase):
     def test_simple(self):
         root = TreeNode(0)
