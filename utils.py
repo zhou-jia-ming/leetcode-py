@@ -15,6 +15,20 @@ class TreeNode:
         self.right = None
 
 
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
+
+
+def generate_list(data: List[Any]):
+    head = cur_node = ListNode(data[0])
+    for item in data[1:]:
+        cur_node.next = ListNode(item)
+        cur_node = cur_node.next
+    return head
+
+
 # 从列表生成二叉树。列表是一个层次遍历的结果
 
 def generate_tree(data: List[Any]):
