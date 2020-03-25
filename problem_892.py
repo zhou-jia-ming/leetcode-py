@@ -16,19 +16,32 @@ from typing import List
 
 class Solution:
     def surfaceArea(self, grid: List[List[int]]) -> int:
-
         # 击败6% 思路：每个立方条贡献的面积等于底面积+顶面积+四周-和相邻立方重合部分
+        # area = 0
+        # for i, line in enumerate(grid):
+        #     for j, item in enumerate(line):
+        #         if item:
+        #             area += item * 4 + 2
+        #             for x, y in [[i + 1, j], [i - 1, j], [i, j + 1],
+        #                          [i, j - 1]]:
+        #                 if 0 <= x < len(grid) and 0 <= y < len(grid[0]):
+        #                     area -= min(grid[x][y], item)
+        #
+        # return area
+
+        # 优化一下 击败48%,不必4个方向都遍历，减去重合面积*2
         area = 0
-        for i, line in enumerate(grid):
-            for j, item in enumerate(line):
-                if item:
-                    area += item * 4 + 2
-                    for x, y in [[i + 1, j], [i - 1, j], [i, j + 1],
-                                 [i, j - 1]]:
+        N = len(grid)
+        for i in range(N):
+            for j in range(N):
+                if grid[i][j]:
+                    area += grid[i][j] * 4 + 2
+                    for x, y in [[i + 1, j], [i, j + 1]]:
                         if 0 <= x < len(grid) and 0 <= y < len(grid[0]):
-                            area -= min(grid[x][y], item)
+                            area -= min(grid[x][y], grid[i][j])*2
 
         return area
+
 
 
 if __name__ == "__main__":
