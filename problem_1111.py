@@ -42,26 +42,36 @@ from typing import List
 
 class Solution(object):
     def maxDepthAfterSplit(self, seq: str) -> List[int]:
-        ans, stack1, stack2 = list(), list(), list()
-        flag = list()
+        # stack 模拟
+        # ans, stack1, stack2 = list(), list(), list()
+        # for c in seq:
+        #     if c == '(':
+        #         if len(stack1) < len(stack2):
+        #             stack1.append(c)
+        #             ans.append(0)
+        #         else:
+        #             stack2.append(c)
+        #             ans.append(1)
+        #     else:
+        #         if stack1:
+        #             stack1.pop()
+        #             ans.append(0)
+        #         else:
+        #             ans.append(1)
+        #             stack2.pop()
+        # return ans
+
+        # 无需stack,只记录stack长度。
+        ans = []
+        stack_length = 0
         for c in seq:
             if c == '(':
-                if len(stack1) < len(stack2):
-                    stack1.append(c)
-                    ans.append(0)
-                    flag.append(0)
-                else:
-                    stack2.append(c)
-                    ans.append(1)
-                    flag.append(1)
+                stack_length += 1
+                ans.append(stack_length % 2)  # 先push,再计算
             else:
-                f = flag.pop()
-                if f == 0:
-                    stack1.pop()
-                    ans.append(0)
-                else:
-                    ans.append(1)
-                    stack2.pop()
+                ans.append(stack_length % 2)  # 先计算奇偶性，再pop
+                stack_length -= 1
+
         return ans
 
 
