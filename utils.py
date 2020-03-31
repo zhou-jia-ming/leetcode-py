@@ -20,6 +20,14 @@ class ListNode:
         self.val = x
         self.next = None
 
+    def __str__(self):
+        res = str(self.val)
+        cur = self.next
+        while cur:
+            res += "->{}".format(cur.val)
+            cur = cur.next
+        return res + "->None"
+
 
 def generate_list(data: List[Any]):
     head = cur_node = ListNode(data[0])
